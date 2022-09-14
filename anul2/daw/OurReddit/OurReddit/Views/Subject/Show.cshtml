@@ -1,0 +1,123 @@
+﻿<br />
+<a class="btn btn-default" href="/Category/Show/@ViewBag.subject.CategoryId"><span aria-hidden="true">&#9664; Inapoi la Subiecte</span></a>
+<br />
+<hr />
+
+<div class="panel panel-default">
+    <div class="panel-heading article-heading">
+        <a href="/Subject/Show/@ViewBag.subject.Id" class="article-title">@ViewBag.subject.Title</a>
+    </div>
+
+    <div class="article-content">
+        @ViewBag.subject.Description
+    </div>
+
+
+    <div class="article-meta">
+        <span class="meta flex-row">
+            <span class="flex-container">
+                <i class="glyphicon glyphicon-user"></i>
+                @ViewBag.subject.User.UserName
+            </span>
+            <span class="flex-container">
+                <i class="glyphicon glyphicon-time"></i>
+                @ViewBag.subject.DateCreated.ToString("dddd, dd MMMM yyyy HH:mm:ss", new System.Globalization.CultureInfo("ro-RO"))
+            </span>
+        </span>
+    </div>
+
+    @if (ViewBag.subject.UserId == ViewBag.currentUserId || ViewBag.isModerator || ViewBag.isAdmin)
+    {
+        <div class="panel-footer">
+            <div class="btn-group" role="group">
+                <form method="post" action="/Subject/Delete/@ViewBag.subject.Id">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <a class="btn btn-success" href="/Subject/Edit/@ViewBag.subject.Id"><i class="glyphicon-edit glyphicon"></i> Editeaza</a>
+                    <button class="btn btn-danger" type="submit"><i class="glyphicon-trash glyphicon"></i> Sterge</button>
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+<br />
+<h3>
+    <div class="col-lg-6">Mesajele acestui subiect de discutie</div>
+    @using (Html.BeginForm("Show", "Subject", FormMethod.Get, new { @class = "col-lg-6" }))
+    {
+        if (ViewBag.total != 0)
+        {
+            <div class="form-group">
+                @Html.DropDownList("sort", @ViewBag.SortingMethods as List<SelectListItem>,
+                         "Sorteaza Mesajele", new
+                         {
+                             @class = "col-md-6 form-control form-controlborderless",
+                             @style = "margin-right:10px;"
+                         })
+
+                <button class="col-md-2 btn btn-success" type="submit">
+                    Sorteaza
+                </button>
+            </div>
+        }
+    }
+
+</h3>
+
+<br />
+<hr />
+
+<div class="messages entries">
+    @foreach (var message in ViewBag.subject.Messages)
+    {
+        <div class="messages entry">
+            <div class="img"></div>
+            <div class="content">
+                <div class="title">
+                    @message.User.UserName
+                    @if (message.Edited == true)
+                    {
+                        <span> &nbsp;  <i class="glyphicon-pencil glyphicon"></i></span>
+                    }
+                </div>
+                <div class="date"> @message.DateCreated.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("ro-RO")) </div>
+                <div class="description"> @message.Content </div>
+            </div>
+
+            @if (ViewBag.currentUserId == message.UserId || ViewBag.isAdmin || ViewBag.isModerator)
+            {
+                <div class="panel-body">
+                    <div class="btn-group" role="group">
+                        <form method="post" action="/Message/Delete/@message.Id">
+                            <a style="margin-right: 10px;" class="btn btn-success" href="/Message/Edit/@message.Id"><i class="glyphicon-edit glyphicon"></i> Edit</a>
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="btn btn-danger" type="submit"><i class="glyphicon-trash glyphicon"></i> Delete</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @model OurReddit.Models.Message
+    
+    using (Html.BeginForm(actionName: "New", controllerName: "Message", routeValues: new { id = ViewBag.subject.Id }))
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+
+        @Html.Hidden("SubjectId", (object)ViewBag.subject.Id)
+        @Html.Hidden("DateCreated", DateTime.UtcNow)
+        @Html.Hidden("Edited", false)
+
+        @Html.Label("Mesajul tau")
+        @Html.ValidationMessageFor(m => m.Content)
+        @Html.ValidationMessage("Content")
+        @Html.TextArea("Content", null, 2, 100, new { @class = "form-control" })
+        <br />
+        <button class="btn btn-success" type="submit"><i class="glyphicon-plus glyphicon"></i> Adauga un nou mesaj</button>
+    }
+}

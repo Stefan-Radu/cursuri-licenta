@@ -1,0 +1,22 @@
+De ce VIM când nu ai toate țiglele pe casă?
+
+
+După cum se spune în popor „toți programatorii cu toate țiglele pe casă aleg VSCode, nu Vim”, așadar că, invevitabil ne întrebăm de unii oameni aleg acest editor dubios apărut prima data în 1991. Veți găsi în continuare o scurtă descriere a editorului și câteva motive pentru care consider că este cool.
+
+Ubiquitous. Il veți găsi aproape peste tot. Dacă nu este deja preinstalat (puțin probabil), este la o comandă distanță de a fi instalat pe orice sistem UNIX based.
+
+Rapid. În primul rând, este un software rapid. Ruleaza în terminal, se deschide instant, este foarte lightweight. În al doilea rând, un utilizator performant de VIM își va îndeplini task-urile rapid datorită multitudinii de shortcut-uri (aproape orice tasta este o scurtătură pentru o anumită acțiune) și diverselor moduri de lucru.
+
+NORMAL mode. În VIM by default te afli in „NORMAL mode”, în care nu poți scrie text, ci poți naviga și edita într-un mod extrem de eficient textul deja existent. Acest este cumva unic acestui editor, iar existența sa are perfect sens întrucât majoritatea timpului (mai ales ca developeri) navigăm și edităm, nu scriem. Cateva comenzi din „NORMAL mode”: deplasare pe caracter (h, j, k, l), deplasare pe cuvant (w, e, b), deplasare pe pagină (Ctrl-F, Ctrl-B, gg, G), deplasare pe linie (0, $, t, f, ^, _), etc. 
+
+Alte moduri. Mai există și „INSERT mode” în care se scrie ca în orice alt editor, „VISUAL mode” pentru selectare de text și altele pe care nu le foloște nimieni.
+
+Combinare de shortcut-uri. Daca vrei sa ștergi 3 cuvinte scrii „d3w”, iar daca vrei dai paste ca să înlocuiești conținutul acoladelor scrii „vi{\p” și multe altele.
+
+Foarte configurabil. Este extensibil în nenumarate direcții prin intermediul fișierului de configurare, limbajului propriu „vimscript”, sau pachetelor scrise de alți developer fără toate țiglele pe casă.
+
+Din fericire eu am demonstrat că am toate țigele pe casă pentru că folosesc NVIM.
+
+Referinte:
+vim - https://www.vim.org/
+neovim - https://github.com/neovim/neovim

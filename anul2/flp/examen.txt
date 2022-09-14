@@ -1,0 +1,124 @@
+1.
+
+< while (i*5 =< 25, i = i + 1), {i->5} >
+-- transformam in if --
+< if (i*5 =< 25, i = i + 1; while (i*5 =< 25, i = i + 1), skip), {i->5} >
+-- evaluam i cu valoare din memorie --
+< if (5*5 =< 25, i = i + 1; while (i*5 =< 25, i = i + 1), skip), {i->5} >
+-- calculam produsul --
+< if (25 =< 25, i = i + 1; while (i*5 =< 25, i = i + 1), skip), {i->5} >
+-- evaluam comparatia --
+< if (true, i = i + 1; while (i*5 =< 25, i = i + 1), skip), {i->5} >
+-- executam if --
+< i = i + 1; while (i*5 =< 25, i = i + 1), {i->5} >
+-- evaluam i din memorie --
+< i = 5 + 1; while (i*5 =< 25, i = i + 1), {i->5} >
+-- executam adunare --
+< i = 6; while (i*5 =< 25, i = i + 1), {i->5} >
+-- actualizam memorie --
+< while (i*5 =< 25, i = i + 1), {i->6} >
+
+
+2.
+
+marchez cu linii acoperirea pentru fiecare definitie a 
+unei functii lambda
+
+daca e parametru -> de legatura
+
+daca variabila e acoperita de vreo definitie o iau pe cea 
+mai apropiata
+
+altfel e libera
+
+  /-----     /----------------------------
+ /          /   /-------    /---              /-------
+/          /   /           /                 /
+(λi.e i) ((λi.(λe.e + i) ((λe.i) (i + e))) ((λi. e  i) i))
+  1 2 3     4   5 6   7     8 9  10  11      12 13 14 15
+
+1. de legatura
+2. libera
+3. legata de i1
+4. de legatura
+5. de legatura
+6. legata de e5
+7. legata de i4
+8. de legatura
+9. legata de i4
+10. legata de i4
+11. libera
+12. de legatura
+13. libera
+14. legata de i12
+15. libera
+
+
+3. 
+
+variabile: x, y, z, u, v, w
+constante: a, b, c
+simb functii: f, g, h, p
+
+Pas 1:
+  S: 
+  R: p(f(x,y), z, f(x,b)) = p(z,f(h(x),x),z)
+
+Pas 2:
+  S: 
+  R: f(x,y) = z 
+     z = f(h(x),x)
+     f(x,b) = z
+    
+Pas 3:
+  S: z = f(x, y)
+  R: f(x, y) = f(h(x),x)
+     f(x,b) = f(x, y)
+
+Pas 4:
+  S: z = f(x, y)
+  R: x = h(x) -> fail (nu exista unificator)
+     y = x
+     f(x,b) = f(x, y)
+
+5. 
+
+1. i(c).
+2. i(s(X)):- p(X).
+3. i(s(s(X))) :- i(X). 
+4. p(a).
+5. p(b).
+6. p(s(X)) :- i(X).
+7. p(s(s(X))) :- p(X).
+
+?- i(s(s(s(a)))).
+
+i(s(s(s(a))))
+  \-- Aplic 1
+      Unific i(s(s(s(a)))) cu i(c): c = i(s(s(s(a)))) -> fail
+  \-- Aplic 2
+      Unific i(s(s(s(a)))) cu i(s(X)): X = s(s(a))
+        :- p(s(s(a)))
+           \-- Aplic 4
+           Unific p(s(s(a))) cu p(a): a = s(s(a)) -> fail
+           \-- Aplic 5
+           Unific p(s(s(a))) cu p(b): b = s(s(a)) -> fail
+           \-- Aplic 6
+           Unific p(s(s(a))) cu p(s(X)): X = s(a)
+              :- i(s(a))
+                 \-- Aplic 1
+                 Unific i(s(a)) cu i(c): c = s(a) -> fail
+                 \-- Aplic 2
+                 Unific i(s(a)) cu i(s(X)): X = a -> succes
+          ----------- MA OPRESC ----------
+           \-- Aplic 7
+           Unific p(s(s(a))) cu p(s(s(X))): X = a
+              :- p(a)
+                 \-- Aplic 4
+                 Unific p(a) cu p(a): a = a -> succes
+                 \-- Aplic 5
+                 Unific p(a) cu p(b): a = b -> fail
+                 \-- Aplic 6
+                 Unific p(a) cu p(s(X)): a = s(X) -> fail
+                 \-- Aplic 7
+                 Unific p(a) cu p(s(s(X))): a = s(s(X)) -> fail

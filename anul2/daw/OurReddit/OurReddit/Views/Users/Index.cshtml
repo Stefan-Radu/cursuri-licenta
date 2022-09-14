@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "👥 Administrare utilizatori";
+}
+<h2 class="page-header"> @ViewBag.Title</h2>
+
+@foreach (var user in ViewBag.UsersList)
+{
+<div class="panel panel-default">
+    <div class="panel-heading"><b>👤 @user.UserName</b></div>
+    <div class="panel-body">
+        <i class="glyphicon glyphicon-envelope"></i> Email:
+        <span class="label label-default">@user.Email</span>
+    </div>
+
+    <div class="panel-footer">
+
+        @using (Html.BeginForm(actionName: "Delete", controllerName: "Users", routeValues: new { id = @user.Id }))
+        {
+            <a class="btn btn-sm btn-success" href="/Users/Show/@user.Id"><i class="glyphicon-eye-open glyphicon"></i> Vezi profil </a>
+            @Html.AntiForgeryToken()
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-sm btn-danger" type="submit"><i class="glyphicon-trash glyphicon"></i> Sterge utilizator</button>
+
+        }
+    </div>
+
+
+</div>
+
+        }
+
+

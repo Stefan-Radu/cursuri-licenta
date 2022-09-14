@@ -1,0 +1,19 @@
+﻿
+@model OurReddit.Models.Category
+
+<h2 class="page-header"><i class="glyphicon glyphicon-plus"></i> Adauga o noua categorie</h2>
+
+@using (Html.BeginForm("New", "Category",
+     new { ReturnUrl = ViewBag.ReturnUrl },
+     FormMethod.Post, new { @class = "form-group" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("DateCreated", DateTime.UtcNow)
+
+    @Html.Label("Name", "Nume categorie")
+    <br />
+    @Html.ValidationMessage("Name", new { @class = "text-danger" })
+    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    <br />
+    <button class="btn btn-primary" type="submit"><i class="glyphicon-check glyphicon"></i> Adauga</button>
+}

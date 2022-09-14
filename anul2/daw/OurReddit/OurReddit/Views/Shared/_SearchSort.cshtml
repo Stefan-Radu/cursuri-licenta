@@ -1,0 +1,37 @@
+﻿
+<div class="container">
+    <div class="row">
+        <form class="col-lg-6" method="GET">
+            <div class="row">
+                <input style="margin-right:10px;" class="col-md-4 form-control form-controlborderless" type="text" name="search"
+                       value="@ViewBag.SearchString"
+                       placeholder="Cauta @ViewBag.What">
+                <button class="col-md-2 btn btn-success" type="submit">
+                    Cauta
+                </button>
+            </div>
+        </form>
+
+        @using (Html.BeginForm((string) ViewBag.Action, (string) ViewBag.Route, FormMethod.Get, new { @class = "col-lg-6" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row">
+                @Html.DropDownList("sort", @ViewBag.SortingMethods as List<SelectListItem>,
+                    "Sorteaza " + (string)ViewBag.What, new
+                         {
+                        @style = "margin-right:10px;",
+                        @class = "col-md-4 form-control form-controlborderless"
+                    })
+
+                @Html.Hidden("search", (string)@ViewBag.SearchString)
+
+                @Html.Hidden("pageNumber", (string)@ViewBag.currentPage.ToString())
+
+                <button class="col-md-2 btn btn-success" type="submit">
+                    Sorteaza
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />

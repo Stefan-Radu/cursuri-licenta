@@ -1,0 +1,19 @@
+﻿
+@model OurReddit.Models.Message
+<h2 class="page-header"><i class="glyphicon glyphicon-edit"></i> Modifica Mesajul</h2>
+
+
+@using (Html.BeginForm("Edit", "Message", new { @class = "form-group" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+    @Html.Hidden("Edited", true)
+
+    @Html.Label("Content", "Continutul Mesajului")
+    <br />
+    @Html.ValidationMessage("Content", new { @class = "text-danger" })
+    @Html.TextAreaFor(m => m.Content, new { @class = "form-control" })
+    <br />
+
+    <button class="btn btn-primary" type="submit"><i class="glyphicon-floppy-disk glyphicon"></i> Salveaza</button>
+}

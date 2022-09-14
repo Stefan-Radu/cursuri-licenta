@@ -1,0 +1,28 @@
+1. i(c).
+2. i(s(X)):- p(X).
+3. i(s(s(X))) :- i(X). 
+4. p(a).
+5. p(b).
+6. p(s(X)) :- i(X).
+7. p(s(s(X))) :- p(X).
+
+?- i(s(s(s(a)))).
+
+i(s(s(s(a)))) (pot aplica cu 1, 2, 3)
+  \-- Aplic 1
+      Unific i(s(s(s(a)))) cu i(c): c = i(s(s(s(a)))) -> fail
+  \-- Aplic 2
+      Unific i(s(s(s(a)))) cu i(s(X)): X = s(s(a))
+        :- p(s(s(a))) (pot aplica 4, 5, 6, 7)
+           \-- Aplic 4
+           Unific p(s(s(a))) cu p(a): a = s(s(a)) -> fail
+           \-- Aplic 5
+           Unific p(s(s(a))) cu p(b): b = s(s(a)) -> fail
+           \-- Aplic 6
+           Unific p(s(s(a))) cu p(s(X)): X = s(a)
+              :- i(s(a)) (pot aplica 1, 2, 3)
+                 \-- Aplic 1
+                 Unific i(s(a)) cu i(c): c = s(a) -> fail
+                 \-- Aplic 2
+                 Unific i(s(a)) cu i(s(X)): X = a -> succes
+                 -- multime vida -> MA OPRESC --

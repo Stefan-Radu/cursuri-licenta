@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+    http_api:
+        image: snisioi/retele:2021
+        volumes:
+            - .:/elocal
+        tty: true
+        ports:
+         - "8080:8080"
+        command: bash -c "python3 /elocal/simple_flask.py"

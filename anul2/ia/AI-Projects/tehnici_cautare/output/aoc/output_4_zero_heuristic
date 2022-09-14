@@ -1,0 +1,20 @@
+Found 1 / 10 solutions
+Finished after 0.011485 seconds.
+Maximum states at one time in memory: 73
+Total states loaded in memory: 1293
+
+--------------------- 1 ---------------------
+Distanta sarita: 8
+1) Broscuta se afla pe frunza initiala id0(0, 0).
+Greutate broscuta: 7
+2) Broscuta a sarit de la id0 (0, 0) la id24 (0, 2).
+Broscuta a mancat 2 insecte. Greutate broscuta: 8
+3) Broscuta a sarit de la id24 (0, 2) la id26 (1, 2).
+Broscuta a mancat 0 insecte. Greutate broscuta: 7
+4) Broscuta a sarit de la id26 (1, 2) la id7 (3, 2).
+Broscuta a mancat 4 insecte. Greutate broscuta: 10
+5) Broscuta a sarit de la id7 (3, 2) la id40 (5, 3).
+Broscuta a mancat 0 insecte. Greutate broscuta: 9
+6) Broscuta a ajuns la mal in 5 sarituri.
+---------------------------------------------
+

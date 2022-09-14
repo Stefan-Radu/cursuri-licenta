@@ -1,0 +1,20 @@
+user: grupa131
+password: oracle
+
+pentru conectarea pe oracle 11g - db1 pe care lucram in sala 201:
+hostname: 10.212.2.251
+sid:      db1
+
+pentru conectarea pe oracle 11g - varianta de siguranta in caz ca pica db1 (pe care lucran in sala 201):
+hostname: 10.212.1.253
+sid:      o11g
+
+pentru conectarea pe oracle 11g - acces extern:
+hostname: 193.226.51.37
+sid:      o11g
+
+
+
+
+
+

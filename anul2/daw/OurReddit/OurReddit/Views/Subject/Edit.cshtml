@@ -1,0 +1,30 @@
+﻿@model OurReddit.Models.Subject
+
+<h2 class="page-header"><i class="glyphicon glyphicon-edit"></i> Editeaza Subiectul</h2>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Subject", routeValues: new { id = Model.Id }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Label("Title", "Subject Title")
+    <br />
+    @Html.ValidationMessage("Title", new { @class = "text-danger" })
+    @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+
+    <br />
+    @Html.Label("Description", "Subject Description")
+    <br />
+    @Html.ValidationMessage("Description", new { @class = "text-danger" })
+    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+
+    if (ViewBag.isModerator == true || ViewBag.isAdmin == true)
+    {
+        <br />
+        @Html.Label("Category", "Subject Category")
+        @Html.DropDownList("newCategory", new SelectList(Model.AllCategories, "Value", "Text", ViewBag.subjectCategory), null, new { @class = "form-control" });
+    }
+
+    <br />
+    <button class="btn btn-success" type="submit"><i class="glyphicon-check glyphicon"></i> Editeaza Subiectul</button>
+}
